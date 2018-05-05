@@ -1,0 +1,29 @@
+{
+  "name": "kifa",
+  "version": "1.0.0",
+  "description": "служба доставки нерудных материалов и аренда спецтехники",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AleksBartov/kifa.git"
+  },
+  "author": "Бартов Александр",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AleksBartov/kifa/issues"
+  },
+  "homepage": "https://github.com/AleksBartov/kifa#readme",
+  "dependencies": {
+    "bcrypt": "^2.0.1",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "joi": "^13.2.0",
+    "lodash": "^4.17.10",
+    "mongoose": "^5.0.17",
+    "morgan": "^1.9.0"
+  }
+}
