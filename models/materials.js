@@ -14,7 +14,7 @@ const Material = mongoose.model('Material', new mongoose.Schema({
         type: String,
         required: true,
         minlength: 10,
-        maxlength: 250,
+        maxlength: 2000,
         trim: true
     }
 }));

@@ -12,11 +12,11 @@ router.post('/', async (req, res) => {
         description: req.body.description
     });
     material = await material.save();
-    res.send(_.pick(material, ['name']));
+    res.send(_.pick(material, ['name', 'description']));
 });
 
 router.get('/', async (req, res) => {
-    const materials = await Material.find().sort('name');
+    const materials = await Material.find().sort('name').select('-__v');
     res.send(materials);
 });
 
@@ -32,18 +32,16 @@ router.put('/:id', async (req, res) => {
     res.send(material);
 });
 
-router.delete('/:id', async (req, res) => {
-    const material = await Material.findByIdAndRemove(req.params.id);
-    if (!material) return res.status(404).send('у нас нет таких материалов');
-
-    res.send(material);
+router.delete('/:id', (req, res) => {
+    Material.findByIdAndRemove(req.params.id)
+        .then(material => res.send(_.pick(material, ['name'])))
+        .catch(err => res.status(404).send('у нас нет таких материалов'));
 });
 
-router.get('/:id', async (req, res) => {
-    const material = await Material.findById(req.params.id);
-    if (!material) return res.status(404).send('у нас нет таких материалов');
-
-    res.send(material);
+router.get('/:id', (req, res) => {
+    Material.findById(req.params.id)
+        .then(material => res.send(_.pick(material, ['name', '_id', 'description'])))
+        .catch(err => res.status(404).send('у нас нет таких материалов'));
 });
 
 module.exports = router;
