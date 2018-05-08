@@ -1,10 +1,12 @@
 const { Material, validate } = require('../models/materials');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 const mongoose = require('mongoose');
 const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     let material = new Material({
@@ -20,7 +22,7 @@ router.get('/', async (req, res) => {
     res.send(materials);
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     const material = await Material.findByIdAndUpdate(req.params.id, {
@@ -32,7 +34,7 @@ router.put('/:id', async (req, res) => {
     res.send(material);
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', [auth, admin], (req, res) => {
     Material.findByIdAndRemove(req.params.id)
         .then(material => res.send(_.pick(material, ['name'])))
         .catch(err => res.status(404).send('у нас нет таких материалов'));
