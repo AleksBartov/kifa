@@ -1,3 +1,5 @@
+require('express-async-errors');
+const error = require('./middleware/error');
 const config = require('config');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -18,8 +20,10 @@ app.use('/api/materials', materials);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 
+app.use(error);
+
 mongoose
-    .connect(`mongodb://AleksBartov:${process.env.DB_PASS}@ds247439.mlab.com:47439/aleksbartovworks`)
+    .connect('mongodb://AleksBartov:Merahba2018@ds247439.mlab.com:47439/aleksbartovworks')
     .then(() => {
         const port = process.env.PORT || 3000;
         app.listen(port);
